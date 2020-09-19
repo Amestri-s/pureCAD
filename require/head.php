@@ -4,21 +4,29 @@
 <?php
     //Creating connection for the variable $link
     require "mysqlConnection.php";
+    //Grabbing member data, if logged in, and populating session variables
+    if(isset($_SESSION['userID'])){
+        $sql = mysqli_query($link, "SELECT * FROM users WHERE id=".$_SESSION['userID']);
+        $userDetails = mysqli_fetch_array($sql);
+        $selectedCommunity = $userDetails['selectedCommunity'];
+    }
 
-    //Query for grabbing configuration options
-    $optionsQuery = mysqli_query($link, "SELECT * FROM config");
-    $optionsArray = mysqli_fetch_array($optionsQuery);
-
-    //Query for grabbing number of users
-    $noOfUsersQuery = mysqli_query($link, "SELECT * FROM users");
-    $noOfUsers = mysqli_num_rows($noOfUsersQuery);
+    //Query for grabbing community info, if one is selected
+    if(isset($selectedCommunity)){
+        if(!($selectedCommunity == 0)){
+            $sql = mysqli_query($link, "SELECT * FROM communities WHERE id=".$selectedCommunity);
+            $communityDetails = $mysqli_fetch_array($sql);
+        }else{
+            $communityDetails['name'] = "NO COMMUNITY SELECTED";
+        }
+    }
 ?>
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title><?php echo($optionsArray['communityName'].' | '.$pageTitle); ?></title>
+  <title><?php echo($pageTitle.' | PureCAD'); ?></title>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
   <!-- Bootstrap core CSS -->
@@ -34,12 +42,12 @@
   <meta property="og:description" content="The aim of Pure CAD is to provide an intuitive CAD that users enjoy.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="<?php echo $optionsArray['communityLogo']; ?>">
+  <link rel="stylesheet" type="text/css" href="https://cdn.wpcc.io/lib/1.0.2/cookieconsent.min.css"/><script src="https://cdn.wpcc.io/lib/1.0.2/cookieconsent.min.js" defer></script><script>window.addEventListener("load", function(){window.wpcc.init({"border":"thin","corners":"small","colors":{"popup":{"background":"#cff5ff","text":"#000000","border":"#5e99c2"},"button":{"background":"#5e99c2","text":"#ffffff"}}})});</script>
 </head>
 
 <body>
-    <!--Navbar -->
-    <nav class="mb-1 navbar navbar-expand-lg navbar-dark blue-gradient">
-      <a class="navbar-brand" href="#"><?php echo $optionsArray['communityName']; ?></a>
+    <nav class="navbar navbar-expand-lg navbar-dark primary-color">
+      <a class="navbar-brand" href="#">PureCAD</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
         aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -73,4 +81,3 @@
         </ul>
       </div>
     </nav>
-    <!--/.Navbar -->
