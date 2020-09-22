@@ -74,7 +74,7 @@
                 }
               }else{
                 $error = true;
-                $captchaError = "Captcha failed, try again.";
+                $captchaError = "Captcha failed, try again.". $decodedOut->success;
               }
             }else{
               $error = true;
