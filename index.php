@@ -57,7 +57,7 @@
               $captchaOut = curl_exec($curl);
               curl_close($curl);
               $decodedOut = json_decode($captchaOut);
-              if($decodedOut->success == true){
+              if($decodedOut['success'] == true){
                 if(empty($error)){
                   $SQL = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
                   if($stmt = mysqli_prepare($link, $SQL)){
@@ -74,7 +74,7 @@
                 }
               }else{
                 $error = true;
-                $captchaError = "Captcha failed, try again. Error: ".$decodedOut->error-codes;
+                $captchaError = "Captcha failed, try again. Error";
               }
             }else{
               $error = true;
