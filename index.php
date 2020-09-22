@@ -55,7 +55,6 @@
               curl_setopt($curl, CURlOPT_RETURNTRANSFER, true);
 
               $captchaOut = curl_exec($curl);
-              curl_close($curl);
               $decodedOut = json_decode($captchaOut);
               if($decodedOut->success){
                 if(empty($error)){
