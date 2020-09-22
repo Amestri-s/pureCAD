@@ -3,7 +3,7 @@
     $pageTitle = "Home";
     require "require/head.php";
 
-    $secretKey = "6LcYo8wZAAAAADxFGLVTIQWmj28Pt2nAFF7jeAa5";
+    $secretKey = "0xb1070eA859823783dA74f6036AF7816FaaA521f8";
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         if($_GET['action'] == "register"){
@@ -47,7 +47,7 @@
             if(!empty($_POST['g-recaptcha-response'])){
               $verifyToken = $_POST['g-recaptcha-response'];
               $curl = curl_init();
-              $url = "https://www.google.com/recaptcha/api/siteverify";
+              $url = "https://hcaptcha.com/siteverify";
 
               curl_setopt($curl, CURLOPT_URL, $url);
               curl_setopt($curl, CURLOPT_POST, true);
@@ -189,14 +189,14 @@
             <input name="password" type="password" id="password" class="form-control mb-4" placeholder="Password" maxlength="30" required>
             <label>Confirm the password</label>
             <input name="confirmPassword" type="password" id="confirmPassword" class="form-control mb-4" placeholder="Password" maxlength="30" required>
-            <div class="g-recaptcha" data-sitekey="6LcYo8wZAAAAAL5kfji_zZuQ54xIteE-9bBIF7YH"></div>
+            <div class="h-captcha" data-sitekey="5d2e9347-ea83-48cd-9591-c4e2740d29de"></div>
             <button class="btn blue-gradient" type="submit">Sign up</button>
         </form>
       </div>
     </div>
   </div>
 </div>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src='https://www.hCaptcha.com/1/api.js' async defer></script>
 <?php
   require "require/footer.php";
   if(isset($error)){
