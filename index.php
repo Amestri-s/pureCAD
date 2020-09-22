@@ -66,6 +66,8 @@
               }else{
                 $error = true;
                 $captchaError = "Captcha failed, try again";
+                echo $responseData["error-codes"];
+                echo $responseData["success"];
               }
             }else{
               $error = true;
