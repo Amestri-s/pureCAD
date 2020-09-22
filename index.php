@@ -56,8 +56,8 @@
 
               $captchaOut = curl_exec($curl);
               curl_close($curl);
-              $decodedOut = json_decode($captchaOut, true);
-              if($decodedOut['success'] === true){
+              $decodedOut = json_decode($captchaOut);
+              if($decodedOut->success==1){
                 if(empty($error)){
                   $SQL = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
                   if($stmt = mysqli_prepare($link, $SQL)){
