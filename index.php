@@ -46,9 +46,9 @@
             //Captcha validation
             if(!empty($_POST['g-recaptcha-response'])){
               $verifyToken = $_POST['g-recaptcha-response'];
-              $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$verifyToken);
+              $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".urlencode($secretKey)."&response=".urlencode($verifyToken));
               $responseData = json_decode($response, true);
-              if($responseData["success"] == true){
+              if($responseData["success"]){
                 if(empty($error)){
                   $SQL = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
                   if($stmt = mysqli_prepare($link, $SQL)){
@@ -64,7 +64,6 @@
                   }
                 }
               }else{
-                echo $responseData->success;
                 $error = true;
                 $captchaError = "Captcha failed, try again";
               }
