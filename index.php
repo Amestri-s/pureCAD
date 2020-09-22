@@ -47,7 +47,7 @@
             if(!empty($_POST['g-recaptcha-response'])){
               $verifyToken = $_POST['g-recaptcha-response'];
               $curl = curl_init();
-              $url = "https://www.google.com/recaptcha/api/siteverify"
+              $url = "https://www.google.com/recaptcha/api/siteverify";
 
               curl_setopt($curl, CURLOPT_URL, $url);
               curl_setopt($curl, CURLOPT_POST, true);
