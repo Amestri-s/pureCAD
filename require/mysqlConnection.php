@@ -1,9 +1,9 @@
 <?php
     //Establishing connection details
     define('DB_SERVER', 'localhost');
-    define('DB_USERNAME', 'scfrsite_scfrdata');
-    define('DB_PASSWORD', 'scfrdata11');
-    define('DB_NAME', 'scfrsite_scfrdata');
+    define('DB_USERNAME', 'purecadn_pcad');
+    define('DB_PASSWORD', 'M9GtrSe$kTKN');
+    define('DB_NAME', 'purecadn_pcaddat_dev');
 
     //Establishing connection
     $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
