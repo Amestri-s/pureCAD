@@ -46,9 +46,18 @@
             //Captcha validation
             if(!empty($_POST['g-recaptcha-response'])){
               $verifyToken = $_POST['g-recaptcha-response'];
-              $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".urlencode($secretKey)."&response=".urlencode($verifyToken));
-              $responseData = json_decode($response, true);
-              if($responseData["success"]){
+              $curl = curl_init();
+              $url = "https://www.google.com/recaptcha/api/siteverify"
+
+              curl_setopt($curl, CURLOPT_URL, $url);
+              curl_setopt($curl, CURLOPT_POST, true);
+              curl_setopt($curl, CURLOPT_POSTFIELDS, "secret=".$secretKey."&response=".$verifyToken);
+              curl_setopt($curl, CURlOPT_RETURNTRANSFER, true);
+
+              $captchaOut = curl_exec($curl);
+              curl_close($curl);
+              $decodedOut = json_decode($captchaOut);
+              if($decodedOut->success == true){
                 if(empty($error)){
                   $SQL = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
                   if($stmt = mysqli_prepare($link, $SQL)){
@@ -65,7 +74,7 @@
                 }
               }else{
                 $error = true;
-                $captchaError = "Captcha failed, try again. Error: ".$responseData["error-codes"];
+                $captchaError = "Captcha failed, try again. Error: ".$decodedOut->error-codes;
               }
             }else{
               $error = true;
