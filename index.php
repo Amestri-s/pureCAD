@@ -3,8 +3,6 @@
     $pageTitle = "Home";
     require "require/head.php";
 
-    $secretKey = "0xb1070eA859823783dA74f6036AF7816FaaA521f8";
-
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         if($_GET['action'] == "register"){
 
@@ -45,17 +43,25 @@
             }
             //Captcha validation
             if(!empty($_POST['g-recaptcha-response'])){
-              $verifyToken = $_POST['g-recaptcha-response'];
-              $curl = curl_init();
-              $url = "https://hcaptcha.com/siteverify";
-
-              curl_setopt($curl, CURLOPT_URL, $url);
-              curl_setopt($curl, CURLOPT_POST, true);
-              curl_setopt($curl, CURLOPT_POSTFIELDS, "secret=".$secretKey."&response=".$verifyToken);
-              curl_setopt($curl, CURlOPT_RETURNTRANSFER, true);
-
-              $captchaOut = curl_exec($curl);
-              $decodedOut = json_decode($captchaOut);
+              $verifyURL = "https://hcaptcha.com/siteverify";
+              $token = $_POST['h-captcha-response'];
+              $secretKey = "0xb1070eA859823783dA74f6036AF7816FaaA521f8";
+              $data = array(
+                'secret' => $secretKey,
+                'response' => $token,
+                'remoteip' => $_SERVER['REMOTE_ADDR']
+              );
+              $curlConfig = array(
+                CURLOPT_URL => $verifyURL,
+                CURLOPT_POST => true,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_POSTFIELDS => $data
+              );
+              $ch = curl_init();
+              curl_setopt_array($ch, $curlConfig);
+              $response = curl_exec($ch);
+              curl_close($ch);
+              $decodedOut = json_decode($response);
               if($decodedOut->success){
                 if(empty($error)){
                   $SQL = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
