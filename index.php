@@ -102,6 +102,8 @@
                   session_start();
                   $_SESSION['userID'] == $id;
                   header("Location: /pureCAD");
+                }else{
+                  $authError = "Invalid username/password"
                 }
               }
             }
@@ -156,6 +158,9 @@
         </button>
       </div>
       <div class="modal-body">
+        <?php
+          if(isset($authError)){echo '<div class="alert alert-danger" role="alert">'.$authError.'</div>';}
+        ?>
         <form class="text-center border border-light p-5" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?action=login" method="post">
             <input name="username" type="username" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="Username" required>
             <input name="password" type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password" required>
@@ -212,5 +217,11 @@
             });
           </script>';
     }
+  }elseif(isset($authError)){
+    echo'<script>
+            $(document).ready(function(){
+              $("#logInModal").modal'."('show')".';
+            });
+          </script>';
   }
 ?>
