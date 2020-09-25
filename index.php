@@ -103,7 +103,7 @@
                   $_SESSION['userID'] == $id;
                   header("Location: /pureCAD");
                 }else{
-                  $authError = "Invalid username/password"
+                  $authError = "Invalid username/password";
                 }
               }
             }
