@@ -220,7 +220,7 @@
   }elseif(isset($authError)){
     echo'<script>
             $(document).ready(function(){
-              $("#logInModal").modal'."('show')".';
+              $("#loginModal").modal'."('show')".';
             });
           </script>';
   }
