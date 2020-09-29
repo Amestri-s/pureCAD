@@ -104,7 +104,7 @@
                   header("Location: /pureCAD");
                 }else{
                   $authError = "Invalid username/password";
-                  $echo mysqli_error($link);
+                  echo mysqli_error($link);
                 }
               }
             }
