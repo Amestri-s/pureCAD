@@ -105,7 +105,7 @@
                 }else{
                   $authError = "Invalid username/password";
                   echo $password.$hashedPassword;
-                  echo $username;
+                  echo $user;
                   echo mysqli_error($link);
                 }
               }
