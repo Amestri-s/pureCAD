@@ -1,6 +1,6 @@
 <?php
     //Title of the page
-    $pageTitle = "Home";
+    $pageTitle = "Home Page";
     require "require/head.php";
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
